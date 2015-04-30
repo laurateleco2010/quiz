@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     
   </head>
@@ -10,4 +10,9 @@
     <h1> Bienvenido a <%= title %></h1>
     <p>El portal donde podra crear sus propios juegos!</p>
   </body>
+  <footer>
+    <h4> Pagina de <a href="file:///home/barbara.rsteegman/mis_proyectos/quiz/views/author.ejs">AUTOR</a></h4>
+    <h4> Pagina del proyecto en <a href="https://moodle.upm.es/titulaciones/oficiales/course/view.php?id=4532">GitHub</a></h4>
+  </footer>
+
 </html>
