@@ -1,36 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>pagina de autor</title>
-      <link href="/style.css" rel="stylesheet" type="text/css">
-      <link href="/movlp1.css" rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)">
+    <title>Pagina de autor </title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    
   </head>
   <body>
- 
-    <h1>LAURA SORIA & BARBARA RECARTE</h1>
-    
-    <div id="menu">
-    <nav>
-      <ul>
-       <li><a href="index.html"> Inicio</a></li>
-       <li><a href="asignaturas.html"> Asignaturas</a></li>
-      </ul>
-    </nav>
-    </div>
-    <br>
-    <br>
-    
-    <div id = "fv">
-      <img src= "barbara.png" height ="400px" widht ="272px">
-      <img src= "barbara.png" height ="400px" widht ="272px">
-    </div>
+    <h1> Autores:></h1>
+    <h3> Laura Soria Simón y Barbara Recarte Steegman></h3>
+    <img src= "images/barbara.jpg" height ="400px" widht ="272px">
+    <img src= "images/laura.jpg" height ="400px" widht ="272px">
     <iframe width="640" height="400" src="https://www.youtube.com/embed/09R8_2nJtjg" frameborder="0" allowfullscreen></iframe>
     
-    <footer>
-      <p ALIGN=center><font size= 5> <b>Bárbara Recarte Steegman y Laura Soria Simon</b> </font></p>
-      <p ALIGN=center><i>barbara.rsteegman@alumnos.upm.es   laura.soria.simon@alumnos.upm.es</i></p>
-      <h5 ALIGN=1px><script type = "text/javascript"> document.write("  Fecha: "+ new Date()); </script></h5>
-    </footer>
   </body>
-</html> 
+  <footer>
+    <p><a href="/index">Inicio</a></p>
+  </footer>
+
+</html>
