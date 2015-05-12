@@ -15,10 +15,6 @@ var storage = process.env.DATABASE_STORAGE;
 // Cargar Modelo ORM
 var Sequelize = require('sequelize');
 
-console.log("===================================URL = ", url);
-console.log("===================================DIALECTO = ", dialect);
-console.log("===================================DIALECTO = ", protocol);
- 
 //Usar BBDD SQlite o Postgres:
 var sequelize = new Sequelize (DB_name, user, pwd, 
 	{dialect: protocol,
