@@ -1,7 +1,7 @@
 // Definción del modelo de Comment con validacion
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define{
+  return sequelize.define(
     'Comment',
     { texto: {
        type: DataTypes.STRING,
