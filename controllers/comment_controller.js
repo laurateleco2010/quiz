@@ -30,7 +30,7 @@ exports.create = function(req, res){
     comment
     .validate()
     .then
-      function(err){
+      function((err){
        if (err) {
          res.render('comments/new.ejs', {comment: comment, errors: err.errors});
        } else {
