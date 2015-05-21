@@ -1,5 +1,17 @@
 var models = require('../models/models.js');
 
+// MW que permite acciones solamente si el quiz objeto pertenece al usuario logeado o si es cuenta admin
+exports.ownershipRequired = function(req, res, next){
+	var objQuizOwner = req.quiz.UserId;
+	var logUser = req.session.user.id;
+	var isAdmin = req.session.user.isAdmin;
+
+	if (isAdmin || objQuizOwner === logUser) {
+	    next();
+	} else {
+	    res.redirect('/');
+	}
+};
 
 //Autoload - factoriza el codigo si ruta incluye: quizId
 exports.load = function(req,res, next, quizId) {
@@ -17,10 +29,15 @@ exports.load = function(req,res, next, quizId) {
 
 //GET /quizes
 exports.index = function(req,res) {
-   models.Quiz.findAll().then(function(quizes){
+    var options = {};
+    if(req.user){
+           options.where = {UserId: req.user.id}
+    }
+
+    models.Quiz.findAll().then(function(quizes){
 	res.render('quizes/index.ejs', {quizes: quizes, errors: []});
-   }
-   ).catch(function(error) { next(error)});
+     }
+    ).catch(function(error) { next(error)});
 };
 
 //GET /quizes/:id
@@ -46,21 +63,24 @@ exports.new = function(req,res) {
      res.render('quizes/new', {quiz: quiz, errors: []});
 };
 
-//POST /quizes/create
-exports.create = function(req,res) {
-     var quiz = models.Quiz.build(req.body.quiz);
-
+// POST /quizes/create
+exports.create = function(req, res) {
+       req.body.quiz.UserId = req.session.user.id;
+       if(req.files.image){
+          req.body.quiz.image = req.files.image.name;
+        }
+        var quiz = models.Quiz.build( req.body.quiz );
+     
      quiz.validate().then(function(err){
-	if(err) {
-	    res.render('quizes/new', {quiz: quiz, errors: err.errors});
-        } else {
-	  //quarda en DB los campos pregunta y respuesta de quiz
-         quiz.save({fields: ["pregunta", "repuesta"]}).then(function(){
-     res.redirect('/quizes')})
-   }
-  }
- );
-      // Redireccion HTTP (URL relativo) lista de preguntas
+          if (err) {
+               res.render('quizes/new', {quiz: quiz, errors: err.errors});
+          }else{
+               quiz // save: guarda en DB campos pregunta y respuesta de quiz
+               .save({fields: ["pregunta", "respuesta", "UserId", "image"]})
+               .then( function(){ res.redirect('/quizes')})
+          } // res.redirect: Redirección HTTP a lista de preguntas
+      }
+      ).catch(function(error){next(error)});
 };
 
 //GET /quizes/:id/edit
@@ -80,18 +100,24 @@ exports.destroy = function(req,res) {
 };
 
 
-//PUT /quizes/:id
-exports.update = function(req,res) {
-     req.quiz.pregunta = req.body.quiz.pregunta;
-     req.quiz.respuesta = req.body.quiz.respuesta;
-     req.quiz.validate().then(function(err){
-	if (err) {
-	    res.render('quizes/edit', {quiz: req.quiz, errors: err.errors});
-	} else {
-	    req.quiz.save( {fields: ["pregunta", "respuesta"]}).then( function(){ res.redirect('/quizes');});
-   }  //Redireccion HTTP a la lista de preguntas (URL relativo)
-  }
- );
+// PUT /quizes/:id
+exports.update = function(req, res) {
+      if(req.files.image){
+            req.quiz.image = req.files.image.name;
+      }
+      req.quiz.pregunta = req.body.quiz.pregunta;
+      req.quiz.respuesta = req.body.quiz.respuesta;
+      
+      req.quiz.validate().then(function(err){
+           if (err) {
+               res.render('quizes/edit', {quiz: req.quiz, errors: err.errors});
+           } else {
+               req.quiz // save: guarda campos pregunta y respuesta en DB
+               .save( {fields: ["pregunta", "respuesta", "image"]})
+               .then( function(){ res.redirect('/quizes');});
+           } // Redirección HTTP a lista de preguntas (URL relativo)
+       }
+      ).catch(function(error){next(error)});
 };   
 
 
