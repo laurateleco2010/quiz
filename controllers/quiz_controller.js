@@ -28,26 +28,26 @@ exports.load = function(req,res, next, quizId) {
 };
 
 //GET /quizes
-exports.index = function(req,res) {
+exports.index = function(req,res, next) {
     var options = {};
     if(req.user){
            options.where = {UserId: req.user.id}
     }
 
     models.Quiz.findAll(options).then(function(quizes){
-	res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+      	res.render('quizes/index.ejs', {quizes: quizes, errors: []});
      }
     ).catch(function(error) { next(error)});
 };
 
 //GET /quizes/:id
-exports.show = function(req,res) { 
+exports.show = function(req,res, next) { 
 	res.render('quizes/show', {quiz: req.quiz, errors: []});
 };
 
 
 //GET /quizes/:id/answer
-exports.answer = function(req,res) {
+exports.answer = function(req,res, next) {
      var resultado = 'Incorrecto';
 	if (req.query.respuesta === req.quiz.respuesta){
 	  resultado = 'Correcto';
@@ -56,7 +56,7 @@ exports.answer = function(req,res) {
 };
 
 //GET /quizes/new
-exports.new = function(req,res) {
+exports.new = function(req,res, next) {
      var quiz = models.Quiz.build( // crea objeto quiz
        {pregunta: "Pregunta", respuesta: "Respuesta"}
      );
@@ -64,7 +64,7 @@ exports.new = function(req,res) {
 };
 
 // POST /quizes/create
-exports.create = function(req, res) {
+exports.create = function(req, res, next) {
        req.body.quiz.UserId = req.session.user.id;
        if(req.files.image){
           req.body.quiz.image = req.files.image.name;
@@ -106,7 +106,7 @@ exports.search = function(req, res, next) {
 };
 
 //GET /quizes/:id/edit
-exports.edit = function(req,res) {
+exports.edit = function(req,res, next) {
      var quiz = req.quiz; // autoload de instancia de quiz
       
      res.render('quizes/edit', {quiz: quiz, errors: []});
@@ -115,7 +115,7 @@ exports.edit = function(req,res) {
 
 
 // PUT /quizes/:id
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
       if(req.files.image){
             req.quiz.image = req.files.image.name;
       }
@@ -136,7 +136,7 @@ exports.update = function(req, res) {
 
 
 //DELETE /quizes/:id
-exports.destroy = function(req,res) {
+exports.destroy = function(req,res, next) {
 
       req.quiz.destroy().then( function() { 
         res.redirect('/quizes');
