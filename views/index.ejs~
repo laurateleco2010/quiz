@@ -9,11 +9,9 @@
   <body>
     <h1> Bienvenido a <%= title %></h1>
     <p>El portal donde podra crear sus propios juegos!</p>
-    <p><a href="quizes">Comience a jugar</a></p>
   </body>
   <footer>
     <h4> Pagina de <a href="author">Creditos</a></h4>
-    <h4> Pagina del proyecto en <a href="https://moodle.upm.es/titulaciones/oficiales/course/view.php?id=4532">GitHub</a></h4>
   </footer>
 
 </html>

@@ -34,7 +34,7 @@ exports.index = function(req,res) {
            options.where = {UserId: req.user.id}
     }
 
-    models.Quiz.findAll().then(function(quizes){
+    models.Quiz.findAll(options).then(function(quizes){
 	res.render('quizes/index.ejs', {quizes: quizes, errors: []});
      }
     ).catch(function(error) { next(error)});
@@ -83,6 +83,28 @@ exports.create = function(req, res) {
       ).catch(function(error){next(error)});
 };
 
+
+//BUSCADOR DE PREGUNTAS
+exports.search = function(req, res, next) {
+
+  var z = req.query.z ||'';
+  var search = "%" + z.replace(" ", '%')+"%";
+
+  models.Quiz
+  .findAll({where: ["pregunta like ?",search], order: 'pregunta'})
+  .then(function(quizes){
+    res.render('quizes/search',{
+      anterior: z,
+      quizes: quizes,
+      errors: []
+    });
+  })
+  .error(function(error){
+    console.log('Error: No se puede buscar',error);
+    res.redirect('/');
+    });
+};
+
 //GET /quizes/:id/edit
 exports.edit = function(req,res) {
      var quiz = req.quiz; // autoload de instancia de quiz
@@ -90,14 +112,6 @@ exports.edit = function(req,res) {
      res.render('quizes/edit', {quiz: quiz, errors: []});
 };
 
-
-//DELETE /quizes/:id
-exports.destroy = function(req,res) {
-
-      req.quiz.destroy().then( function() { 
-        res.redirect('/quizes');
-    }).catch(function(error){next(error)});
-};
 
 
 // PUT /quizes/:id
@@ -121,7 +135,13 @@ exports.update = function(req, res) {
 };   
 
 
+//DELETE /quizes/:id
+exports.destroy = function(req,res) {
 
+      req.quiz.destroy().then( function() { 
+        res.redirect('/quizes');
+    }).catch(function(error){next(error)});
+};
 
 
 

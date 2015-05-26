@@ -5,4 +5,6 @@ h2 span, section h3, label.rem
 body { font-size: xx-large; }
 input, button { font-size: x-large; }
 footer { font-size: large; }
+nav { height: 380px; }
+section { height: 380px; }
 .quiz_img { float: none; }

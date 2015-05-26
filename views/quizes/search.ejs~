@@ -1,0 +1,11 @@
+<h1>Buscardor de Preguntas</h1>
+ <form method='get' action='/quizes/search'>
+    <input type="text" id="y" name="y" value="<%= anterior %>">
+  <input type="submit" value="Buscar" />
+ </form>
+
+
+ <%- include index.ejs %>
+
+ <a href="/quizes"> Volver </a>
+

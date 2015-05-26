@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var partials = require('express-partials');0
+var partials = require('express-partials');
 var methodOverride = require('method-override');
 var session = require('express-session');
 
@@ -66,7 +66,7 @@ if (app.get('env') === 'development') {
         res.render('error', {
             message: err.message,
             error: err,
-	    errors: []
+	          errors: []
         });
     });
 }
@@ -78,7 +78,7 @@ app.use(function(err, req, res, next) {
     res.render('error', {
         message: err.message,
         error: {},
-	errors: []
+	      errors: []
     });
 });
 

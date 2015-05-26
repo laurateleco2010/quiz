@@ -9,11 +9,11 @@ body    { margin: 0; padding: 0; }
 section > div         { padding: 10px;}
 header, nav, section  { background: #eee; text-align: center;}
 footer                { background: #eee; text-align: center;}
-nav span              { margin: 0px 10px 0px 0px;}
+nav span              { margin: 0px 10px 0px 0px;
+			width: 100%;
+			display: inline-block;
+                        height: 320px; }
+#ErrorMsgs      { color: #f61; font-size: smaler}
 
-
-width: 100%;
-display: inline-block;}
-#ErrorMsgs { color: #f61; font-size: smaler}
-.right {float: right;}
-.quiz_img { height: 150px; float: left;}
+.right        {float: right;}
+.quiz_img     { height: 130px; float: left;}

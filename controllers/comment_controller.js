@@ -9,8 +9,8 @@ exports.ownershipRequired = function(req, res, next){
       }).then(function(quiz) {
       if (quiz) {
            var objQuizOwner = quiz.UserId;
-	   var logUser = req.session.user.id;
-	   var isAdmin = req.session.user.isAdmin;
+	         var logUser = req.session.user.id;
+	         var isAdmin = req.session.user.isAdmin;
 
            console.log(objQuizOwner, logUser, isAdmin);
 
@@ -66,6 +66,33 @@ exports.create = function(req, res){
       ).catch(function(error){next(error)});
 
 };
+
+//GET/quizes/statistics
+exports.statistics = function(req,res){
+ var conComentarios = [];
+ var sinComentarios;
+ models.Quiz.count().then(function(quizes){
+  models.Comment.findAll(
+   {where:{publicado:true}}).then(function(comments){
+     sinComentarios = quizes;
+     for(var i=0; i<comments.length; i++){
+      if(conComentarios[comments[i].QuizId] === undefined){
+        sinComentarios--;
+       }
+      conComentarios[comments[i].QuizId]= 1;
+      }
+      res.render('quizes/statistics', {
+         quizes: quizes,
+         comentarios:comments.length,
+         mediaComentarios:comments.length/quizes,
+         pregSinComentarios: sinComentarios,
+         pregConComentarios: quizes-sinComentarios,
+         errors:[]
+       });
+      });
+   });
+};
+
 
 //GET /quizes/:quizId/comments/:commentId/publish
 exports.publish = function(req,res) {
