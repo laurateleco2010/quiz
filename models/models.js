@@ -52,7 +52,7 @@ exports.User = User;
 
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
-sequelize.sync({force: true}).then(function(){
+sequelize.sync({force: false).then(function(){
 // then(..) ejecuta el manejador una vez creada la tabla         
  User.count().then(function (count){
      if(count === 0) { // la tabla se inicializa solo si está vacía
